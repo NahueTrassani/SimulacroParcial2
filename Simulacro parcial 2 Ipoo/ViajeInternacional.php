@@ -3,8 +3,8 @@ class ViajeInternacional extends Viaje{
     private $docAdicional;
     private $impuestos;
 
-    public function __construct($fecha, $horaLlegada, $horaPartida, $montoBase, $chofer, $docAdicional, $impuestos) {
-        parent::__construct($fecha, $horaLlegada, $horaPartida, $montoBase, $chofer);
+    public function __construct($destino, $horaPartida, $horaLlegada, $numero, $montoBase, $fecha, $asientosTotales, $asientosDisponibles, $responsable, $docAdicional, $impuestos) {
+        parent::__construct($destino, $horaPartida, $horaLlegada, $numero, $montoBase, $fecha, $asientosTotales, $asientosDisponibles, $responsable);
         $this->docAdicional = $docAdicional;
         $this->impuestos = $impuestos;
     }
@@ -26,6 +26,17 @@ class ViajeInternacional extends Viaje{
     public function setImpuestos($impuestos){
         $this->impuestos = $impuestos;
     }
+    public function obtenerMontoTotal(){
+        $montoBase = $this->getMontoBase();
+        //aca consulta si requiere informacion adicional.
+        if ($this->getDocAdicional()) {
+            $impuestos = $montoBase * ($this->getImpuestos() / 100);
+            return $montoBase + $impuestos;
+        } else {
+            return $montoBase;
+        }
+    }
+
 }
 
 ?>
